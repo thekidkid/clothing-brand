@@ -32,14 +32,16 @@ const connectDB = async () => {
     await mongoose.connect(mongoURI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      serverSelectionTimeoutMS: 5000, // Timeout after 5s instead of 30s
-      socketTimeoutMS: 45000, // Close sockets after 45s of inactivity
+      serverSelectionTimeoutMS: 30000, // Increased timeout for free tier
+      socketTimeoutMS: 60000, // Increased socket timeout
+      keepAlive: true,
+      keepAliveInitialDelay: 300000 // 5 minutes
     });
     console.log('MongoDB Connected Successfully');
   } catch (err) {
     console.error('MongoDB Connection Error:', err);
-    // Retry connection after 5 seconds
-    setTimeout(connectDB, 5000);
+    // Retry connection after 10 seconds
+    setTimeout(connectDB, 10000);
   }
 };
 
