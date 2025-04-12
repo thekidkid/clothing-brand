@@ -62,6 +62,11 @@ mongoose.connection.on('disconnected', () => {
 const adminProductRoutes = require('./routes/admin/products');
 app.use('/api/admin/products', adminProductRoutes);
 
+// Ping endpoint
+app.get('/ping', (req, res) => {
+  res.status(200).json({ status: 'ok', message: 'Server is alive' });
+});
+
 // Handle React routing, return all requests to React app
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
